@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/app_main_wallpaper"
+    tools:context=".MainActivity">
+
+    <com.luseen.spacenavigation.SpaceNavigationView
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        app:active_centre_button_icon_color="@color/white"
+        app:active_item_color="@color/colorAccent"
+        app:centre_button_color="@color/colorPrimaryDark"
+        app:centre_button_icon="@drawable/ic_baseline_home"
+        app:inactive_item_color="@color/black"
+        app:space_background_color="@color/white"
+        app:active_centre_button_background_color="#F44336"
+        app:space_item_icon_only_size="40dp"
+        app:space_item_icon_size="25dp"
+        app:space_item_text_size="@dimen/space_item_text_default_size" />
+
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="500dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@drawable/search_bg"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/app_main_wallpaper"
+        android:drawableBottom="@drawable/ic_baseline_menu_24"
+        android:drawableTint="@color/white"
+        android:gravity="right"
+        android:onClick="showPopup" />
+
+</RelativeLayout>

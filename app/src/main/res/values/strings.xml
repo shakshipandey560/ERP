@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ERP</string>
+    <string name="paragraph">
+        WEBAND DEVELOPERS\nWe are a team of 3 persons.\nWe develop projects on Web Development and Android Development.
+    </string>
+    <string name="facebook_app_id">488391345771546</string>
+    <string name="fb_login_protocol_scheme">fb488391345771546</string>
+</resources>
