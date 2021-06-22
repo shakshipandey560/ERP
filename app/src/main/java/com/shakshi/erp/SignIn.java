@@ -16,8 +16,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+//import com.shakshi.erp.userInfo.Connect;
 
 public class SignIn extends AppCompatActivity {
 
@@ -27,6 +31,8 @@ public class SignIn extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private ProgressDialog mLoadingBar;
+
+
 
     FirebaseDatabase rootNode;
     DatabaseReference reference;
@@ -46,14 +52,13 @@ public class SignIn extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
         mLoadingBar = new ProgressDialog(SignIn.this);
 
-        //
+        
 
 
         btnReg = findViewById(R.id.reGister);
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 checkCrededentials();
 
 
@@ -70,6 +75,7 @@ public class SignIn extends AppCompatActivity {
     }
 
     private void checkCrededentials() {
+
         String fullname = inputUserName.getText().toString();
         String email = inputEmail.getText().toString();
         String mobile_no = inputNumber.getText().toString();
@@ -93,6 +99,9 @@ public class SignIn extends AppCompatActivity {
             showError(inputConfirmPassword,"Password is not matched");
         }
         else{
+
+
+
             mLoadingBar.setTitle("Registration");
             mLoadingBar.setMessage("Please Wait!!!");
             mLoadingBar.setCanceledOnTouchOutside(false);
@@ -108,11 +117,35 @@ public class SignIn extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()){
-                                    Toast.makeText(SignIn.this, "Successful Register. Please check your email for verification!!!", Toast.LENGTH_SHORT).show();
-                                    mLoadingBar.dismiss();
-                                    Intent intent = new Intent(SignIn.this, LogIn.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
+
+                                    FirebaseUser rUser = mAuth.getCurrentUser();
+                                    String userId = rUser.getUid();
+                                    reference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+                                    HashMap<String,String> hashMap = new HashMap<>();
+                                    hashMap.put("userId",userId);
+                                    hashMap.put("Name",fullname);
+                                    hashMap.put("Email",email);
+                                    hashMap.put("Mobile_No",mobile_no);
+                                    hashMap.put("Password",password);
+
+                                    reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                           if(task.isSuccessful()){
+                                               Toast.makeText(SignIn.this, "Successful Register. Please check your email for verification!!!", Toast.LENGTH_SHORT).show();
+                                               mLoadingBar.dismiss();
+
+                                               Intent intent = new Intent(SignIn.this, LogIn.class);
+                                               intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+                                               startActivity(intent);
+                                           }
+                                           else{
+                                               Toast.makeText(SignIn.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                           }
+                                        }
+                                    });
+
                                 }
                                 else{
                                     Toast.makeText(SignIn.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();

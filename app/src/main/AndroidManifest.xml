@@ -11,7 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".nav_header"></activity>
         <activity android:name=".About_Us" />
         <activity android:name=".Cart" />
         <activity android:name=".Contact" />
